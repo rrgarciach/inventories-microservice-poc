@@ -3,15 +3,17 @@ services:
   inventories-service:
     container_name: inventories-service
     build: .
-    working_dir: /usr/src
-    command: flask run --host=0.0.0.0
+    working_dir: /usr/src/app
+    command: python -m flask run --host=0.0.0.0
     volumes:
-      - .:/usr/src
+      - .:/usr/src/app
     ports:
       - "5000:5000"
     environment:
       FLASK_APP: main.py
       FLASK_DEBUG: 1
+      REDIS_HOST: redis-session
+      REDIS_PORT: 6379
     external_links:
       - redis-session
     network_mode: bridge
