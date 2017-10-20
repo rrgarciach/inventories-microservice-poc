@@ -1,10 +1,6 @@
-from flask import Flask, request, jsonify
-import redis
-import logging, os, json
+import session
 
-REDIS_HOST = os.environ['REDIS_HOST']
-REDIS_PORT = os.environ['REDIS_PORT']
-r = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, db=0)
+from flask import Flask, request, jsonify
 
 def request_wants_json():
     best = request.accept_mimetypes \
@@ -27,9 +23,5 @@ def create_app():
     return app
 
 def loadSession():
-    response = r.get('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJmb28xMjMiLCJyb2xlIjoiY2xpZW50IiwiaWF0IjoxNTA4NTI0MzYwLCJleHAiOjE1MDg1MjUyNjB9.UcGkf2nEQvBwtXy_BKTXrCehGz0BuqXmlXtf8hiiR1o')
-    r.set('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJmb28xMjMiLCJyb2xlIjoiY2xpZW50IiwiaWF0IjoxNTA4NTI0MzYwLCJleHAiOjE1MDg1MjUyNjB9.UcGkf2nEQvBwtXy_BKTXrCehGz0BuqXmlXtf8hiiR1o', '{"username":"xx"}', ex=5)
-    if response is not None:
-        print('SESSION:', json.loads(response))
-        return json.loads(response)
-    return {}
+    userSession = session.getSession('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJmb28xMjMiLCJyb2xlIjoiY2xpZW50IiwiaWF0IjoxNTA4NTMwNTg2LCJleHAiOjE1MDg1MzE0ODZ9.0ydDCd5nRSdrWwfZSLXk3_zFBa9igkv9bmqok9l-GtU')
+    return userSession
