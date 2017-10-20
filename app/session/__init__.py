@@ -1,9 +1,10 @@
 import os, json, redis
 
-REDIS_HOST = os.environ['REDIS_HOST']
-REDIS_PORT = os.environ['REDIS_PORT']
+HOST = os.environ['REDIS_HOST']
+PORT = os.environ['REDIS_PORT']
+PASSWORD = os.environ['REDIS_PASSWORD']
 
-r = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, db=0)
+r = redis.StrictRedis(host=HOST, port=PORT, db=0, password=PASSWORD)
 
 def getSession(token):
     result = r.get(token)

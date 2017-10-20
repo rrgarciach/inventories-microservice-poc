@@ -15,7 +15,13 @@ def create_app():
     @app.route('/api/v1/orders', methods=['GET'])
     def getAllOrders():
         if request_wants_json():
-            # return jsonify({"message": 'hello!'})
+            session = loadSession()
+            return jsonify(session)
+        return 'no json'
+
+    @app.route('/api/v1/orders/<int:order_id>', methods=['GET'])
+    def getOrderById(order_id):
+        if request_wants_json():
             session = loadSession()
             return jsonify(session)
         return 'no json'
