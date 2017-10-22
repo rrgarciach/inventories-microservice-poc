@@ -9,12 +9,29 @@ services:
       - .:/usr/src/app
     ports:
       - "5000:5000"
+    depends_on:
+      - inventories-db
     environment:
       FLASK_APP: main.py
       FLASK_DEBUG: 1
       REDIS_HOST: redis-session
       REDIS_PORT: 6379
       REDIS_PASSWORD: secret2
+      POSTGRES_HOST: inventories-db
+      POSTGRES_PASSWORD: password123
+      POSTGRES_USER: inventories
+      POSTGRES_DB: inventories
     external_links:
       - redis-session
+      - inventories-db
+    network_mode: bridge
+
+  inventories-db:
+    container_name: inventories-db
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password123
+      POSTGRES_USER: inventories
+      POSTGRES_DB: inventories
     network_mode: bridge

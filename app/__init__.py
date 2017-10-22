@@ -1,6 +1,7 @@
 import session
 
 from flask import Flask, request, jsonify
+from config import pg
 
 def request_wants_json():
     best = request.accept_mimetypes \
@@ -11,6 +12,8 @@ def request_wants_json():
 
 def create_app():
     app = Flask(__name__)
+
+    pg.createDB(app)
 
     @app.route('/api/v1/orders', methods=['GET'])
     def getAllOrders():
