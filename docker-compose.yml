@@ -30,6 +30,8 @@ services:
     container_name: inventories-db
     image: postgres
     restart: always
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_PASSWORD: password123
       POSTGRES_USER: inventories
